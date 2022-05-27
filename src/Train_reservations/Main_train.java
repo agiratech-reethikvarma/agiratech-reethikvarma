@@ -9,6 +9,7 @@ public class Main_train {
 
 	public static void main(String[] args) {
 		Main_train ms = new Main_train();
+		System.out.println("WELCOME TO TRAIN TICKET RESERVATION COUNTER.");
 
 		while (b) {
 			ms.doFunctionsFor();
@@ -17,8 +18,11 @@ public class Main_train {
 			}
 		}
 	}
-	
-	
+
+	BookSeats bs = new BookSeats();
+	Reservation_info r = new Reservation_info();
+	Train_info t = new Train_info();
+
 	public void doFunctionsFor() {
 		System.out.println("----- MAIN MENU -----\n");
 		System.out.println("1. Available Trains.");
@@ -30,30 +34,26 @@ public class Main_train {
 		s = new Scanner(System.in);
 		System.out.print("Select the option: ");
 		choice = s.nextInt();
-		BookSeats bs = new BookSeats();
-		Reservation_info r = new Reservation_info();
-		Tickets tc=new Tickets();
-		switch (choice) {
-		case 1:r.getAvailableTrains();
-		
-//		bs.getavailableseats();
-			break;
-		case 2:r.getInfo();
-		tc.TwoSittingSeats();
-		tc.getSeatsfromuser();
-//		bs.getbookedseats();
-		tc.getavailableseats();
 
+		switch (choice) {
+		case 1:
+			r.getAvailableTrains();
+			break;
+		case 2:
+			r.getInfo();
+			bs.TwoSittingSeats();
+			bs.getSeatsfromuser();
+			bs.getbookedseats();
 			break;
 		case 3:
-
-	
-		
+			bs.cancelTicket();
 			break;
 		case 4:
+			bs.getAllTickets();
 			break;
-		case 5:System.out.println("\tThank You Have a Nice Day.");
-		System.out.println("\t#--#--#--#--#\t END\t#--#--#--#--#");
+		case 5:
+			System.out.println("\tThank You Have a Nice Day.");
+			System.out.println("\t#--#--#--#--#\t END\t#--#--#--#--#");
 			b = false;
 			break;
 		default:

@@ -11,6 +11,7 @@ public class Reservation_info {
 	public static String ASN, DSN, RD;
 
 	Scanner s = new Scanner(System.in);
+	Train_info t=new Train_info();
 
 //Getting information from passenger for reservation .
 	public void getInfo() {
@@ -28,9 +29,9 @@ public class Reservation_info {
 		gen = s.next().charAt(0);
 
 		getAvailableTrains();
-	}
+	
 //		getReservationDetails();
-
+	}
 //Show the details Given by user for Conformation.
 	public void getReservationDetails() {
 		
@@ -44,15 +45,18 @@ public class Reservation_info {
 	public void getAvailableTrains() {
 		System.out.print("\n Enter the Arrival Station name : ");
 		ASN = s.next();
+		ASN=ASN.toUpperCase();
 		System.out.print("\n Enter the Destination name : ");
 		DSN = s.next();
+		DSN=DSN.toUpperCase();
 		System.out.print("\n Enter the Date of journey in (YYYY-MM-DD) formate : ");
 		RD = s.next();
 		System.out.println();
-		Train_info t = new Train_info();
-		t.search();
-	}
 
+t.search();
+	}
+	
+	
 //	public static void main(String[] args) {
 //		Reservation_info r = new Reservation_info();
 //		System.out.println("--- Welcome to Train Ticket Reservation Counter  ---");

@@ -47,7 +47,7 @@ static Tickets t=new Tickets();
 		this.TAS = TAS;
 		this.TDS = TDS;
 		this.DOJ = DOJ;
-		this.seatcount=seatcount;
+//		this.seatcount=seatcount;
 //		this.Amount=Amount;
 
 	}
@@ -83,7 +83,7 @@ static Tickets t=new Tickets();
 	// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	public void bookSeat(String seatno) {
-
+.Tickets.
 		if (bookedseats.contains(seatno)) {
 			System.out.println("Entered seat is already booked please select the available seats.");
 
@@ -97,12 +97,16 @@ static Tickets t=new Tickets();
 				if (Iseatno % 4 == 0 || Iseatno % 4 == 1) {
 					System.out.println("Booked window seat:" + seatno);
 					bookedseats.add(seatno);
+					getbookedseats();
 					availableseats.set((Iseatno - 1), "R");
+					Tokengen();
 
 				} else if (Iseatno % 4 == 2 || Iseatno % 4 == 3) {
 					System.out.println("Booked Asile Seat:" + seatno);
 					bookedseats.add(seatno);
+					getbookedseats();
 					availableseats.set((Iseatno - 1), "R");
+					Tokengen();
 
 				} else {
 					System.out.println("There are no available seats.");
@@ -115,6 +119,13 @@ static Tickets t=new Tickets();
 		}
 
 	}
+	public void getbookedseats() {
+//	count=bookedseats.size();
+	System.out.println("Booked seat is :");
+		count=bookedseats.size()-1;
+		System.out.print(bookedseats.get(count));
+
+}
 
 	public void getSeatsfromuser() {
 
@@ -162,6 +173,44 @@ static Tickets t=new Tickets();
 				seatList.get('S').add(SSseats[i]);
 
 			}
+		}
+	}	
+	
+	static ArrayList<Tickets> tokens = new ArrayList<Tickets>();
+	
+	String ID;
+	int age;
+	String name;
+	char gen;
+	String AS, DS;
+	String DATE;
+
+	public Tickets(String ID, String name, int age, char gen, String AS, String DS, String DOJ, String Seatno) {
+			this.ID=ID;
+			this.name = name;
+			this.age = age;
+			this.gen = gen;
+			this.AS = AS;
+			this.DS = DS;
+			this.DATE = DOJ;
+			this.seatno=seatno;
+
+	}
+
+	public void Tokengen() {
+//		Reservation_info r=new Reservation_info();
+
+		String a = Character.toString(AS.charAt(0));
+		String b = Character.toString(DS.charAt(0));
+		String c = seatno;
+		String ID = a + b + c;
+
+		System.out.println(ID);
+
+		tokens.add(new Tickets(ID,Reservation_info.name, Reservation_info.age, Reservation_info.gen, Reservation_info.ASN, Reservation_info.DSN, Reservation_info.RD, seatno));
+//			convert the DOJ to LocalDate formate because it is in String formate.
+		for(int i=0;i<tokens.size();i++) {
+		System.out.println(tokens.get(i));
 		}
 	}
 public static void main(String[] args) {
