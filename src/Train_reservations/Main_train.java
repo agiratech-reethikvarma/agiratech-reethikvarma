@@ -7,6 +7,12 @@ public class Main_train {
 	static boolean b = true;
 	private Scanner s;
 
+	BookSeats bs = new BookSeats();
+	Reservation_info r = new Reservation_info();
+	Train_info t = new Train_info();
+	
+//	Main method.
+
 	public static void main(String[] args) {
 		Main_train ms = new Main_train();
 		System.out.println("WELCOME TO TRAIN TICKET RESERVATION COUNTER.");
@@ -18,17 +24,13 @@ public class Main_train {
 			}
 		}
 	}
-
-	BookSeats bs = new BookSeats();
-	Reservation_info r = new Reservation_info();
-	Train_info t = new Train_info();
-
+// Giving the Options to perform specific action on selection.
 	public void doFunctionsFor() {
 		System.out.println("----- MAIN MENU -----\n");
 		System.out.println("1. Available Trains.");
 		System.out.println("2. Reserve a Ticket.");
-		System.out.println("3. Cancel The Ticket.");
-		System.out.println("4. View All Tickets.");
+		System.out.println("3. View All Tickets.");
+		System.out.println("4. Cancel The Ticket.");
 		System.out.println("5. Exit\n");
 
 		s = new Scanner(System.in);
@@ -43,13 +45,12 @@ public class Main_train {
 			r.getInfo();
 			bs.TwoSittingSeats();
 			bs.getSeatsfromuser();
-			bs.getbookedseats();
 			break;
 		case 3:
-			bs.cancelTicket();
+			bs.getAllTickets();
 			break;
 		case 4:
-			bs.getAllTickets();
+			bs.cancelTicket();
 			break;
 		case 5:
 			System.out.println("\tThank You Have a Nice Day.");
