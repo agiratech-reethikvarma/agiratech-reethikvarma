@@ -10,7 +10,7 @@ public class Main_train {
 	BookSeats bs = new BookSeats();
 	Reservation_info r = new Reservation_info();
 	Train_info t = new Train_info();
-	
+
 //	Main method.
 
 	public static void main(String[] args) {
@@ -24,6 +24,7 @@ public class Main_train {
 			}
 		}
 	}
+
 // Giving the Options to perform specific action on selection.
 	public void doFunctionsFor() {
 		System.out.println("----- MAIN MENU -----\n");
