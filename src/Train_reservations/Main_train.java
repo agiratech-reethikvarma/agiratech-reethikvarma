@@ -3,30 +3,31 @@ package Train_reservations;
 import java.util.Scanner;
 
 public class Main_train {
-	static int choice;
-	static boolean b = true;
-	private Scanner s;
 
-	BookSeats bs = new BookSeats();
-	Reservation_info r = new Reservation_info();
-	Train_info t = new Train_info();
+	static int Choice;
+	static boolean CheckChoice = true;
+	static Scanner scanner = new Scanner(System.in);
 
 //	Main method.
 
 	public static void main(String[] args) {
-		Main_train ms = new Main_train();
+//		Main_train main_train = new Main_train();
 		System.out.println("WELCOME TO TRAIN TICKET RESERVATION COUNTER.");
 
-		while (b) {
-			ms.doFunctionsFor();
-			if (choice == 5) {
+		while (CheckChoice) {
+			DoFunctionsFor();
+			if (Choice == 5) {
 				break;
 			}
 		}
 	}
 
 // Giving the Options to perform specific action on selection.
-	public void doFunctionsFor() {
+	public static void DoFunctionsFor() {
+		Reservation_info reservation_info = new Reservation_info();
+		BookSeats bookseats = new BookSeats();
+		Train_info train_info = new Train_info();
+
 		System.out.println("----- MAIN MENU -----\n");
 		System.out.println("1. Available Trains.");
 		System.out.println("2. Reserve a Ticket.");
@@ -34,29 +35,30 @@ public class Main_train {
 		System.out.println("4. Cancel The Ticket.");
 		System.out.println("5. Exit\n");
 
-		s = new Scanner(System.in);
 		System.out.print("Select the option: ");
-		choice = s.nextInt();
+		Choice = scanner.nextInt();
 
-		switch (choice) {
+		switch (Choice) {
 		case 1:
-			r.getAvailableTrains();
+			reservation_info.get_Trains_Info();
+			bookseats.get_All_Seats_of_train();
 			break;
 		case 2:
-			r.getInfo();
-			bs.TwoSittingSeats();
-			bs.getSeatsfromuser();
+				reservation_info.get_Passenger_Info();
+//				bookseats.TwoSittingSeats();
+				bookseats.getSeatsfromuser();
+
 			break;
 		case 3:
-			bs.getAllTickets();
+			bookseats.getAllTickets();
 			break;
 		case 4:
-			bs.cancelTicket();
+			bookseats.cancelTicket();
 			break;
 		case 5:
 			System.out.println("\tThank You Have a Nice Day.");
 			System.out.println("\t#--#--#--#--#\t END\t#--#--#--#--#");
-			b = false;
+			CheckChoice = false;
 			break;
 		default:
 			System.out.println("Please select the correct option.");
