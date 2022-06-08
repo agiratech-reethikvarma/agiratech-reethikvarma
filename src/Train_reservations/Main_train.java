@@ -11,11 +11,8 @@ public class Main_train {
 //	Main method.
 
 	public static void main(String[] args) {
-//		Main_train main_train = new Main_train();
 		System.out.println("WELCOME TO TRAIN TICKET RESERVATION COUNTER.");
-
-		Train_info.setTrains();
-
+		Train_info.Set_Trains_Informations();
 		while (CheckChoice) {
 			DoFunctionsFor();
 			if (Choice == 5) {
@@ -28,8 +25,6 @@ public class Main_train {
 	public static void DoFunctionsFor() {
 		Reservation_info reservation_info = new Reservation_info();
 		BookSeats bookseats = new BookSeats();
-//		Train_info train_info = new Train_info();
-
 		System.out.println("----- MAIN MENU -----\n");
 		System.out.println("1. Available Trains.");
 		System.out.println("2. Reserve a Ticket.");
@@ -43,19 +38,15 @@ public class Main_train {
 		switch (Choice) {
 		case 1:
 			reservation_info.get_Trains_Info();
-//			bookseats.get_All_Seats_of_train();
 			break;
 		case 2:
-				reservation_info.get_Passenger_Info();
-//				bookseats.TwoSittingSeats();
-//				bookseats.getSeatsfromuser();
-
+			reservation_info.get_Passenger_Info();
 			break;
 		case 3:
-			bookseats.getAllTickets();
+			bookseats.Get_All_Tickets();
 			break;
 		case 4:
-			bookseats.cancelTicket();
+			bookseats.Cancel_Ticket();
 			break;
 		case 5:
 			System.out.println("\tThank You Have a Nice Day.");
