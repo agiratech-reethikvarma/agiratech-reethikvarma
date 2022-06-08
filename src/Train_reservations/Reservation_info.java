@@ -38,6 +38,7 @@ public class Reservation_info {
 
 		System.out.print("\t Gender :");
 		Gender = scanner.next().charAt(0);
+
 		get_Trains_Info();
 	}
 
