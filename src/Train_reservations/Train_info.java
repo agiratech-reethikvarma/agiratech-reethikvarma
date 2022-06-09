@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +18,14 @@ public class Train_info {
 	static int count;
 	int To_Book_TrainNo;
 
-	static List<String> seats_List = new ArrayList<String>();
+	static List<String> seats_List1 = new ArrayList<String>();
+	static List<String> seats_List2 = new ArrayList<String>();
+	static List<String> seats_List3 = new ArrayList<String>();
+	static List<String> seats_List4 = new ArrayList<String>();
+	static List<String> seats_List5 = new ArrayList<String>();
+	static List<String> seats_List6 = new ArrayList<String>();
+	static List<String> seats_List7 = new ArrayList<String>();
+	static List<String> seats_List8 = new ArrayList<String>();
 
 	static Train_info Train_Info_obj = new Train_info();
 	static BookSeats Book_seats_obj = new BookSeats();
@@ -29,27 +37,31 @@ public class Train_info {
 //Adding Trains List And all_Seats_List
 	public static void Set_Trains_Informations() {
 
-		for (int i = 0; i < 4; i++) {
-			count = i + 1;
-			seats_List.add(Integer.toString(count));
-		}
+		Collections.addAll(seats_List1, "1", "2", "3", "4");
+		Collections.addAll(seats_List2, "1", "2", "3", "4");
+		Collections.addAll(seats_List3, "1", "2", "3", "4");
+		Collections.addAll(seats_List4, "1", "2", "3", "4");
+		Collections.addAll(seats_List5, "1", "2", "3", "4");
+		Collections.addAll(seats_List6, "1", "2", "3", "4");
+		Collections.addAll(seats_List7, "1", "2", "3", "4");
+		Collections.addAll(seats_List8, "1", "2", "3", "4");
 
 		all_Trains_List.put(1, new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 07, 01),
-				all_Seats_List.put(1, seats_List)));
+				all_Seats_List.put(1, seats_List1)));
 		all_Trains_List.put(2, new Train_info("TRL<=>CHE", "THIRUVALLUR", "CHENNAI", LocalDate.of(2022, 07, 26),
-				all_Seats_List.put(2, seats_List)));
+				all_Seats_List.put(2, seats_List2)));
 		all_Trains_List.put(3, new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 07, 28),
-				all_Seats_List.put(3, seats_List)));
+				all_Seats_List.put(3, seats_List3)));
 		all_Trains_List.put(4, new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 07, 27),
-				all_Seats_List.put(4, seats_List)));
+				all_Seats_List.put(4, seats_List4)));
 		all_Trains_List.put(5, new Train_info("TRL<=>AVD", "THIRUVALLUR", "AVADI", LocalDate.of(2022, 07, 29),
-				all_Seats_List.put(5, seats_List)));
+				all_Seats_List.put(5, seats_List5)));
 		all_Trains_List.put(6, new Train_info("AVD<=>TRL", "AVADI", "THIRUVALLUR", LocalDate.of(2022, 12, 05),
-				all_Seats_List.put(6, seats_List)));
+				all_Seats_List.put(6, seats_List6)));
 		all_Trains_List.put(7, new Train_info("AVD<=>CHE", "AVADI", "CHENNAI", LocalDate.of(2022, 07, 06),
-				all_Seats_List.put(7, seats_List)));
+				all_Seats_List.put(7, seats_List7)));
 		all_Trains_List.put(8, new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 05, 02),
-				all_Seats_List.put(8, seats_List)));
+				all_Seats_List.put(8, seats_List8)));
 
 	}
 
@@ -90,13 +102,14 @@ public class Train_info {
 			}
 
 		} else {
-			System.out.println("You Entered past Date Please Enter Correct Date.");
+			System.out.println("***  You Entered past Date Please Enter Correct Date.");
 			Reservation_info reservation_info = new Reservation_info();
 			reservation_info.get_Trains_Info();
 		}
 
 		if (available_Trains_List.isEmpty()) {
-			System.out.println("Sorry No All_Trains_List_ListAvailable for Given.");
+			System.out.println("*** Sorry No Trains Available for Given.");
+
 		} else {
 			System.out.println("********* Your Available Trains List**********");
 			Set<Integer> Available_Train_Key = available_Trains_List.keySet();
@@ -124,25 +137,26 @@ public class Train_info {
 	public void Book_Train() {
 		if (!available_Trains_List.isEmpty()) {
 
-			System.out.println("Please Enter the Train Number to select the Train...");
+			System.out.println("Enter the Train Number to select the Train...");
 			To_Book_TrainNo = Scanner_Obj.nextInt();
 
+//			System.out.println(available_Trains_List.get(To_Book_TrainNo).Train_Name + "\t"
+//					+ available_Trains_List.get(To_Book_TrainNo).Train_ArraivalStation + "\t"
+//					+ available_Trains_List.get(To_Book_TrainNo).Train_DestinationStation + "\t"
+//					+ available_Trains_List.get(To_Book_TrainNo).Train_Date + "\t"
+//					+ Train_info.all_Seats_List.get(To_Book_TrainNo));
 			if (available_Trains_List.containsKey(To_Book_TrainNo)) {
 				available_Trains_List.get(To_Book_TrainNo);
 				available_Trains_List.get(To_Book_TrainNo);
-				System.out.println(available_Trains_List.get(To_Book_TrainNo).Train_Name + "\t"
-						+ available_Trains_List.get(To_Book_TrainNo).Train_ArraivalStation + "\t"
-						+ available_Trains_List.get(To_Book_TrainNo).Train_DestinationStation + "\t"
-						+ available_Trains_List.get(To_Book_TrainNo).Train_Date + "\t"
-						+ Train_info.all_Seats_List.get(To_Book_TrainNo));
+
 				Book_seats_obj.Get_SeatNo_To_Book(To_Book_TrainNo);
 			} else {
 
-				System.out.println("Entred Train number is not available in Train list.");
+				System.out.println("*** Entred Train number is not available in Train list.");
 			}
 
 		} else {
-			System.out.println("No Available Trains To Book.");
+			System.out.println("***  No Available Trains To Book.");
 		}
 	}
 

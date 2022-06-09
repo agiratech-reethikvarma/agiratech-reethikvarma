@@ -39,6 +39,7 @@ public class Main_train {
 		case 1:
 			reservation_info.get_Trains_Info();
 			break;
+			
 		case 2:
 			reservation_info.get_Passenger_Info();
 			break;
