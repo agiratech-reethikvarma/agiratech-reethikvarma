@@ -13,10 +13,10 @@ import java.util.List;
 public class Train_info {
 	Scanner Scanner_Obj = new Scanner(System.in);
 
-	public String Train_Name, Train_ArraivalStation, Train_DestinationStation;
-	public LocalDate Train_Date;
+	public String trainName, trainArraivalStation, trainDestinationStation;
+	public LocalDate trainDate;
 	static int count;
-	int To_Book_TrainNo;
+	int bookTrainNo;
 
 	static List<String> seats_List1 = new ArrayList<String>();
 	static List<String> seats_List2 = new ArrayList<String>();
@@ -35,7 +35,7 @@ public class Train_info {
 	static Map<Integer, Train_info> all_Trains_List = new HashMap<Integer, Train_info>();
 
 //Adding Trains List And all_Seats_List
-	public static void Set_Trains_Informations() {
+	public static void set_TrainsInformations() {
 
 		Collections.addAll(seats_List1, "1", "2", "3", "4");
 		Collections.addAll(seats_List2, "1", "2", "3", "4");
@@ -62,69 +62,62 @@ public class Train_info {
 				all_Seats_List.put(7, seats_List7)));
 		all_Trains_List.put(8, new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 05, 02),
 				all_Seats_List.put(8, seats_List8)));
+		
 
+	}
+	public void get_AllTrainsList() {
+		System.out.println("*********   All Trains List    **********");
+
+		System.out.println("|\t Key \t |" + " TrainName \t |" + " Arraival \t |" + " Destination \t |" + " Date \t |"
+				+ " Seats \t |\n"
+				+ "|------------------------------------------------------------------------------------------------|");
+		all_Trains_List.keySet().stream()
+				.forEach(x -> System.out.println("|\t " + x + " \t | " + all_Trains_List.get(x).trainName + " \t | "
+						+ all_Trains_List.get(x).trainArraivalStation + " \t |"
+						+ all_Trains_List.get(x).trainDestinationStation + " \t |" + all_Trains_List.get(x).trainDate
+						+ " \t |" + Train_info.all_Seats_List.get(x) + " \t |"));
 	}
 
 //	 Parameterized constructor to Create List of trains.
-	public Train_info(String Train_Name, String Train_ArraivalStation, String Train_DestinationStation,
+	public Train_info(String trainName, String trainArraivalStation, String trainDestinationStation,
 			LocalDate Date_of_Journey, List<String> all_Seats_List) {
 
-		this.Train_Name = Train_Name;
-		this.Train_ArraivalStation = Train_ArraivalStation;
-		this.Train_DestinationStation = Train_DestinationStation;
-		this.Train_Date = Date_of_Journey;
+		this.trainName = trainName;
+		this.trainArraivalStation = trainArraivalStation;
+		this.trainDestinationStation = trainDestinationStation;
+		this.trainDate = Date_of_Journey;
 	}
 
 // Search the source and Destination Place for The Given Input.
-	public void Check_Available_Trains() {
+	public void check_AvailableTrains() {
 
-		Set<Integer> Train_Key = all_Trains_List.keySet();
-
-		if (LocalDate.now().isBefore(Reservation_info.Date_of_Journey)
-				|| LocalDate.now().isEqual(Reservation_info.Date_of_Journey)) {
-
-			for (Integer Key : Train_Key) {
-
-				if (all_Trains_List.get(Key).Train_ArraivalStation.equals(Reservation_info.passenger_Arraival_Station)
-						&& all_Trains_List.get(Key).Train_DestinationStation
-								.equals(Reservation_info.passenger_Destination_Station)
-						&& (all_Trains_List.get(Key).Train_Date.isEqual(Reservation_info.Date_of_Journey)
-								|| all_Trains_List.get(Key).Train_Date.isAfter(Reservation_info.Date_of_Journey))) {
-
-					available_Trains_List.put(Key,
-							new Train_info(all_Trains_List.get(Key).Train_Name,
-									all_Trains_List.get(Key).Train_ArraivalStation,
-									all_Trains_List.get(Key).Train_DestinationStation,
-									all_Trains_List.get(Key).Train_Date, Train_info.all_Seats_List.get(Key)));
-
-				}
-
-			}
-
-		} else {
-			System.out.println("***  You Entered past Date Please Enter Correct Date.");
-			Reservation_info reservation_info = new Reservation_info();
-			reservation_info.get_Trains_Info();
-		}
+		all_Trains_List.keySet().stream().filter(x -> all_Trains_List.get(x).trainArraivalStation
+				.equals(Reservation_info.passenger_ArraivalStation)
+				&& all_Trains_List.get(x).trainDestinationStation.equals(Reservation_info.passenger_DestinationStation)
+				&& (all_Trains_List.get(x).trainDate.isEqual(Reservation_info.passenger_DateofJourney)
+						|| all_Trains_List.get(x).trainDate.isAfter(Reservation_info.passenger_DateofJourney)))
+				.forEach(x -> available_Trains_List.put(x,
+						new Train_info(all_Trains_List.get(x).trainName, all_Trains_List.get(x).trainArraivalStation,
+								all_Trains_List.get(x).trainDestinationStation, all_Trains_List.get(x).trainDate,
+								Train_info.all_Seats_List.get(x))));
 
 		if (available_Trains_List.isEmpty()) {
 			System.out.println("*** Sorry No Trains Available for Given.");
 
 		} else {
 			System.out.println("********* Your Available Trains List**********");
-			Set<Integer> Available_Train_Key = available_Trains_List.keySet();
-			for (Integer Key : Available_Train_Key) {
-				available_Trains_List.get(Key);
-				System.out.println(Key + "\t" + available_Trains_List.get(Key).Train_Name + "\t"
-						+ available_Trains_List.get(Key).Train_ArraivalStation + "\t"
-						+ available_Trains_List.get(Key).Train_DestinationStation + "\t"
-						+ available_Trains_List.get(Key).Train_Date + "\t" + Train_info.all_Seats_List.get(Key));
+			Set<Integer> availableTrainsListKey = available_Trains_List.keySet();
+			for (Integer Key : availableTrainsListKey) {
+				System.out.println(Key + "\t" + available_Trains_List.get(Key).trainName + "\t"
+						+ available_Trains_List.get(Key).trainArraivalStation + "\t"
+						+ available_Trains_List.get(Key).trainDestinationStation + "\t"
+						+ available_Trains_List.get(Key).trainDate + "\t" + Train_info.all_Seats_List.get(Key));
+				if (Main_train.choice == 3) {
+					book_Train();
+				}
 
 			}
 
-		}
-		if (Main_train.Choice == 2) {
-			Book_Train();
 		}
 
 	}
@@ -134,25 +127,22 @@ public class Train_info {
 		super();
 	}
 
-	public void Book_Train() {
+// Selecting Train No for Booking.
+	public void book_Train() {
 		if (!available_Trains_List.isEmpty()) {
 
 			System.out.println("Enter the Train Number to select the Train...");
-			To_Book_TrainNo = Scanner_Obj.nextInt();
+			bookTrainNo = Scanner_Obj.nextInt();
 
-//			System.out.println(available_Trains_List.get(To_Book_TrainNo).Train_Name + "\t"
-//					+ available_Trains_List.get(To_Book_TrainNo).Train_ArraivalStation + "\t"
-//					+ available_Trains_List.get(To_Book_TrainNo).Train_DestinationStation + "\t"
-//					+ available_Trains_List.get(To_Book_TrainNo).Train_Date + "\t"
-//					+ Train_info.all_Seats_List.get(To_Book_TrainNo));
-			if (available_Trains_List.containsKey(To_Book_TrainNo)) {
-				available_Trains_List.get(To_Book_TrainNo);
-				available_Trains_List.get(To_Book_TrainNo);
+			if (available_Trains_List.containsKey(bookTrainNo)) {
+				available_Trains_List.get(bookTrainNo);
+				available_Trains_List.get(bookTrainNo);
 
-				Book_seats_obj.Get_SeatNo_To_Book(To_Book_TrainNo);
+				Book_seats_obj.get_SeatNoToBook(bookTrainNo);
 			} else {
-
+ 
 				System.out.println("*** Entred Train number is not available in Train list.");
+				book_Train();
 			}
 
 		} else {
