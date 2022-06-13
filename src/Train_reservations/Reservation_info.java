@@ -24,14 +24,11 @@ public class Reservation_info {
 		} while (checkStringFormat(passenger_Name) == false);
 
 		do {
-			if (age_Check != null && !age_Check.matches("[0-9]{2}") && !age_Check.matches("[0-9]")) {
 
-				System.out.println("*** Enter passenger_Age in correct valid number formate.");
-			}
 			System.out.print("\t passenger_Age : ");
 			age_Check = Scanner_obj.next();
 
-		} while (!age_Check.matches("[0-9]{2}") && !age_Check.matches("[0-9]"));
+		} while (checkNumberFormat(age_Check) == false);
 		passenger_Age = Integer.parseInt(age_Check);
 
 		do {
@@ -73,7 +70,7 @@ public class Reservation_info {
 	}
 
 //	Check Input Format is correct or not.
-	private boolean checkStringFormat(String Name) {
+	public boolean checkStringFormat(String Name) {
 		if (Name != null && !Name.matches("^[a-zA-Z]*$")) {
 			System.out.println("*** Enter Your Input in valid Alaphabet Format.");
 			return false;
@@ -83,7 +80,17 @@ public class Reservation_info {
 
 	}
 
-	private boolean checkDateFormat(String date) {
+	public static boolean checkNumberFormat(String number) {
+		if (number != null && !number.matches("[0-9]{2}") && !number.matches("[0-9]")) {
+
+			System.out.println("*** Enter Input in correct valid number formate.");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean checkDateFormat(String date) {
 		try {
 			LocalDate localDate = LocalDate.parse(date);
 			if (!(LocalDate.now().isBefore(localDate) || LocalDate.now().isEqual(localDate))) {
