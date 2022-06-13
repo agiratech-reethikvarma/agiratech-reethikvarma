@@ -83,7 +83,7 @@ static Tickets t=new Tickets();
 	// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	public void bookSeat(String seatno) {
-.Tickets.
+
 		if (bookedseats.contains(seatno)) {
 			System.out.println("Entered seat is already booked please select the available seats.");
 

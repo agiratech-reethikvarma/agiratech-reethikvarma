@@ -10,7 +10,7 @@ public class car {
 		
 		
 		
-		
+		System.out.println("hello");
 //		
 //		int a;
 //		System.out.println("enter the value :");
