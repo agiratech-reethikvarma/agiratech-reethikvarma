@@ -10,14 +10,18 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Train_info {
+
+
 	Scanner Scanner_Obj = new Scanner(System.in);
 
 	public String trainName, trainArraivalStation, trainDestinationStation;
 	public LocalDate trainDate;
 	static int count;
+	int availableSeatsCount;
 	String bookTrainNo;
 
 //	static Map<String, ArrayList<String>> seats_List1=new HashMap<String,ArrayList<String>>();
+	static List<String> seats_ListFormat = new ArrayList<String>();
 	static List<String> seats_List1 = new ArrayList<String>();
 	static List<String> seats_List2 = new ArrayList<String>();
 	static List<String> seats_List3 = new ArrayList<String>();
@@ -39,32 +43,35 @@ public class Train_info {
 //Adding Trains List And all_Seats_List
 	public static void set_TrainsInformations() {
 
-		Collections.addAll(seats_List1, "1", "2", "3", "4");
-		Collections.addAll(seats_List2, "1", "2", "3", "4");
-		Collections.addAll(seats_List3, "1", "2", "3", "4");
-		Collections.addAll(seats_List4, "1", "2", "3", "4");
-		Collections.addAll(seats_List5, "1", "2", "3", "4");
-		Collections.addAll(seats_List6, "1", "2", "3", "4");
-		Collections.addAll(seats_List7, "1", "2", "3", "4");
-		Collections.addAll(seats_List8, "1", "2", "3", "4");
+		for(int i=0;i<20;i++) {
+			seats_ListFormat.add(Integer.toString(i+1));
+		}
+		seats_List1.addAll(seats_ListFormat);
+		seats_List2.addAll(seats_ListFormat);
+		seats_List3.addAll(seats_ListFormat);
+		seats_List4.addAll(seats_ListFormat);
+		seats_List5.addAll(seats_ListFormat);
+		seats_List6.addAll(seats_ListFormat);
+		seats_List7.addAll(seats_ListFormat);
+		seats_List8.addAll(seats_ListFormat);
 		
 		Collections.addAll(reserved_seats_List, "R", "R", "R", "R");
 
-		all_Trains_List.put("1", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 07, 01),
+		all_Trains_List.put("1", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 7, 1),
 				all_Seats_List.put("1", seats_List1)));
-		all_Trains_List.put("2", new Train_info("TRL<=>CHE", "THIRUVALLUR", "CHENNAI", LocalDate.of(2022, 07, 26),
+		all_Trains_List.put("2", new Train_info("TRL<=>CHE", "THIRUVALLUR", "CHENNAI", LocalDate.of(2022, 7, 26),
 				all_Seats_List.put("2", seats_List2)));
-		all_Trains_List.put("3", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 07, 28),
+		all_Trains_List.put("3", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 7, 28),
 				all_Seats_List.put("3", seats_List3)));
-		all_Trains_List.put("4", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 07, 27),
+		all_Trains_List.put("4", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 7, 27),
 				all_Seats_List.put("4", seats_List4)));
-		all_Trains_List.put("5", new Train_info("TRL<=>AVD", "THIRUVALLUR", "AVADI", LocalDate.of(2022, 07, 29),
+		all_Trains_List.put("5", new Train_info("TRL<=>AVD", "THIRUVALLUR", "AVADI", LocalDate.of(2022, 7, 9),
 				all_Seats_List.put("5", seats_List5)));
-		all_Trains_List.put("6", new Train_info("AVD<=>TRL", "AVADI", "THIRUVALLUR", LocalDate.of(2022, 12, 05),
+		all_Trains_List.put("6", new Train_info("AVD<=>TRL", "AVADI", "THIRUVALLUR", LocalDate.of(2022, 12, 5),
 				all_Seats_List.put("6", seats_List6)));
-		all_Trains_List.put("7", new Train_info("AVD<=>CHE", "AVADI", "CHENNAI", LocalDate.of(2022, 07, 06),
+		all_Trains_List.put("7", new Train_info("AVD<=>CHE", "AVADI", "CHENNAI", LocalDate.of(2022, 7, 6),
 				all_Seats_List.put("7", seats_List7)));
-		all_Trains_List.put("8", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 05, 02),
+		all_Trains_List.put("8", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 5, 2),
 				all_Seats_List.put("8", seats_List8)));
 
 	}
@@ -79,9 +86,38 @@ public class Train_info {
 				.forEach(x -> System.out.println("|\t " + x + " \t | " + all_Trains_List.get(x).trainName + " \t | "
 						+ all_Trains_List.get(x).trainArraivalStation + " \t |"
 						+ all_Trains_List.get(x).trainDestinationStation + " \t |" + all_Trains_List.get(x).trainDate
-						+ " \t |" + Train_info.all_Seats_List.get(x) + " \t |"));
+						+ " \t |\t"+checkAvailableSeatsCount(all_Seats_List.get(x))+" \t |"));
+	
+	}
+	
+	private int checkAvailableSeatsCount(List<String>seatsList){
+		availableSeatsCount=seatsList.size();
+		for(int i=0;i<seatsList.size();i++) {
+			if(seatsList.get(i).equals("R")){
+				availableSeatsCount=availableSeatsCount-1;
+			}
+		}
+		return availableSeatsCount;
+	}
+	public void coach_2SFormat() {
+
+		System.out.println("\n\t\t -- 2S Coach Seats Format --");
+		System.out.println("\t-W-" + "\t\t-A-" + "\t\t-A-" + "\t\t-W-");
+		for (int i = 0; i <seats_ListFormat.size(); i++)
+		{
+			count = i + 1;
+			System.out.print("\t " + count + "\t");
+			if (count % 4 == 0) {
+				System.out.println();
+			}
+		}
+		
 	}
 
+	
+	
+	
+	
 //	 Parameterized constructor to Create List of trains.
 	public Train_info(String trainName, String trainArraivalStation, String trainDestinationStation,
 			LocalDate Date_of_Journey, List<String> all_Seats_List) {
@@ -112,13 +148,17 @@ public class Train_info {
 		} else {
 
 			System.out.println("********* Your Available Trains List**********");
+
+			System.out.println("| TrainNo \t |" + " TrainName \t |" + " Arraival \t |" + " Destination \t |" + " Date \t |"
+					+ " Seats \t |\n"
+					+ "|------------------------------------------------------------------------------------------------|");
 			Set<String> availableTrainsListKey = available_Trains_List.keySet();
 			for (String Key : availableTrainsListKey) {
 
-				System.out.println(Key + "\t" + available_Trains_List.get(Key).trainName + "\t"
-						+ available_Trains_List.get(Key).trainArraivalStation + "\t"
-						+ available_Trains_List.get(Key).trainDestinationStation + "\t"
-						+ available_Trains_List.get(Key).trainDate + "\t" + Train_info.all_Seats_List.get(Key));
+				System.out.println("| \t "+Key + " \t | " + available_Trains_List.get(Key).trainName + " \t | "
+						+ available_Trains_List.get(Key).trainArraivalStation + " \t | "
+						+ available_Trains_List.get(Key).trainDestinationStation + " \t | "
+						+ available_Trains_List.get(Key).trainDate + " \t | \t " + checkAvailableSeatsCount(all_Seats_List.get(Key)) + " \t |");
 
 			}
 

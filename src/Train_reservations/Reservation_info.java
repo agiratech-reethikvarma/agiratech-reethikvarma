@@ -8,7 +8,7 @@ public class Reservation_info {
 	Scanner Scanner_obj = new Scanner(System.in);
 	public static String passenger_Name;
 	public static int passenger_Age;
-	public static char passenger_Gender;
+	public static String passenger_Gender;
 	public static String passenger_ArraivalStation, passenger_DestinationStation;
 	public static LocalDate passenger_DateofJourney;
 	public static String age_Check, gender_Check;
@@ -19,26 +19,22 @@ public class Reservation_info {
 		System.out.println(" Enter Details of person ");
 
 		do {
-			System.out.print("\t passenger_Name : ");
-			passenger_Name = Scanner_obj.nextLine();
+			System.out.print("\t Enter Name : ");
+			passenger_Name = Scanner_obj.next();
 		} while (checkStringFormat(passenger_Name) == false);
 
 		do {
 
-			System.out.print("\t passenger_Age : ");
+			System.out.print("\t Enter Age : ");
 			age_Check = Scanner_obj.next();
 
 		} while (checkNumberFormat(age_Check) == false);
 		passenger_Age = Integer.parseInt(age_Check);
 
 		do {
-			if (passenger_Gender != '\u0000' && Character.compare(passenger_Gender, 'M') != 0
-					&& Character.compare(passenger_Gender, 'F') != 0) {
-				System.out.println("*** Enter passenger_Gender in Following formate (Male,Female)/(M,F).");
-			}
-			System.out.print("\t passenger_Gender :");
-			passenger_Gender = Scanner_obj.next().toUpperCase().charAt(0);
-		} while (Character.compare(passenger_Gender, 'M') != 0 && Character.compare(passenger_Gender, 'F') != 0);
+			System.out.print("\t Enter Gender : ");
+			passenger_Gender = Scanner_obj.next().toUpperCase();
+		} while (checkGenderFormate(passenger_Gender)==false);
 
 		get_TrainsInfo();
 	}
@@ -89,6 +85,16 @@ public class Reservation_info {
 			return true;
 		}
 	}
+	
+	public boolean checkGenderFormate(String gender) {
+		if (gender != null && !gender.contentEquals("M") && !gender.contentEquals("MALE")&& !gender.contentEquals("F")
+				&& !gender.contentEquals("FEMALE")) {
+			System.out.println("*** Enter Gender in Following formate (M/Male)for Male , (F/Female)for Female.");
+			return false;
+		}else {
+			return true;
+		}
+	}
 
 	public boolean checkDateFormat(String date) {
 		try {
@@ -100,7 +106,7 @@ public class Reservation_info {
 				return true;
 			}
 		} catch (DateTimeParseException ex) {
-			System.out.println("*** Enter date in Correct Valid (YYYY-MM-DD) Format. ");
+			System.out.println("*** Enter date in Correct Valid Date In (YYYY-MM-DD) Format. ");
 			return false;
 		}
 

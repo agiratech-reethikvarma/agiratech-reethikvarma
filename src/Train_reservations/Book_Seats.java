@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,70 +12,113 @@ public class Book_Seats {
 	static String bookTrainNo;
 	static int count = 0;
 	String seatno;
+	String seatPreference;
 	int seatno_int;
 
 	int age;
 	String trainNumber;
 	String name;
-	char gender;
+	String gender;
 	String arraivalStation, destinationStation, trainName;
 	LocalDate dateofJourney;
 
 	Scanner s = new Scanner(System.in);
 
-	ArrayList<String> booked_Seats = new ArrayList<String>();
+	List<String> booked_Seats = new ArrayList<String>();
 	List<String> available_Seats_Temp = new ArrayList<>();
 	static HashMap<String, Book_Seats> tickets_List = new HashMap<String, Book_Seats>();
+
+	static List<Book_Seats> waiting_List = Arrays.asList(new Book_Seats[10]);
+
+	List<String> windowSeatsList = new ArrayList<String>();
+	List<String> asileSeatsList = new ArrayList<String>();
+
+	public void set2SeatPreferences() {
+
+		for (int i = 0; i < Train_info.all_Seats_List.get(bookTrainNo).size(); i++) {
+
+			if (!Train_info.all_Seats_List.get(bookTrainNo).get(i).equals("R")) {
+				count = Integer.parseInt(Train_info.all_Seats_List.get(bookTrainNo).get(i));
+
+				if (count % 4 == 0 || count % 4 == 1) {
+					windowSeatsList.add(Train_info.all_Seats_List.get(bookTrainNo).get(i));
+				} else {
+					asileSeatsList.add(Train_info.all_Seats_List.get(bookTrainNo).get(i));
+				}
+
+			}
+
+		}
+
+		System.out.println("\n Window Seats List : " + windowSeatsList);
+		System.out.println("\n Aswile Seats list : " + asileSeatsList);
+
+	}
 
 // Runtime input to get seats from user
 
 	public void get_SeatNoToBook(String To_Book_TrainNo) {
 		bookTrainNo = To_Book_TrainNo;
-
+		set2SeatPreferences();
 		do {
+			System.out
+					.println("Enter The Primary Seat Preferences to book seat \"Window seats - W\" , \"Asile Seats - A\" :");
+			seatPreference = s.next();
 
-			System.out.println("Enter The Seat Number : ");
-			seatno = s.next();
+		} while (!(seatPreference.equals("W") || seatPreference.equals("A")));
 
-		} while (Reservation_info.checkNumberFormat(seatno) == false);
+		switch (seatPreference) {
+		case "W":
+			if (!windowSeatsList.isEmpty()) {
+				System.out.println("$$  Booked Window seat $$");
+				bookingSeat(windowSeatsList.get(0));
 
-		seatno_int = Integer.parseInt(seatno);
-
-		available_Seats_Temp = new ArrayList<>(Train_info.all_Seats_List.get(bookTrainNo));
-
-		if (seatno_int > 0 && seatno_int < 5) {
-
-			if (available_Seats_Temp.contains(seatno)) {
-				bookingSeat(seatno);
 			} else {
-				System.out.println("*** Entered seat is already booked please select the available seats.");
-				available_Seats_Temp.stream().filter(x -> x != "R").forEach(x -> System.out.print("  " + x + " "));
-				System.out.println();
-				get_SeatNoToBook(bookTrainNo);
+//				System.out.println("*** NO window seats available.");
+				if (!asileSeatsList.isEmpty()) {
+					System.out.println("**No Window seat available booking asile **");
+					bookingSeat(asileSeatsList.get(0));
+				} else {
+					waiting_List.set(waiting_List.size(), new Book_Seats(name, age, gender, trainNumber, trainName,
+							arraivalStation, destinationStation, dateofJourney, seatno));
+				}
 			}
-		} else {
-			System.out.println("*** Please Enter the Seat Number which are Available ");
-			get_AvailableSeats();
-			get_SeatNoToBook(bookTrainNo);
+
+			break;
+		case "A":
+			if (!asileSeatsList.isEmpty()) {
+				System.out.println("$$ Booked Asile seat $$");
+				bookingSeat(asileSeatsList.get(0));
+			} else {
+				if (!windowSeatsList.isEmpty()) {
+					System.out.println("** NO Asile seats available Booking Window seat **");
+					bookingSeat(windowSeatsList.get(0));
+				} else {
+					waiting_List.set(waiting_List.size(), new Book_Seats(name, age, gender, trainNumber, trainName,
+							arraivalStation, destinationStation, dateofJourney, seatno));
+				}
+
+			}
+
+			break;
+		default:
+			System.out.println("No Seats available");
 		}
+		windowSeatsList.clear();
+		asileSeatsList.clear();
 
 	}
 
 //	Booking seats for users if seats is available. 
 	public void bookingSeat(String seatno) {
+		this.seatno = seatno;
+		seatno_int = Integer.parseInt(seatno);
+		Train_info.all_Seats_List.get(bookTrainNo).set(seatno_int - 1, "R");
 
-		if (seatno_int % 4 == 0 || seatno_int % 4 == 1) {
-			System.out.println("Booked window seat : " + seatno);
-			Train_info.all_Seats_List.get(bookTrainNo).set(seatno_int - 1, "R");
-			ticket_Generate();
+		System.out.println("Booked Seat No: " + seatno);
 
-		} else if (seatno_int % 4 == 2 || seatno_int % 4 == 3) {
-			System.out.println("Booked Asile Seat : " + seatno);
-			Train_info.all_Seats_List.get(bookTrainNo).set(seatno_int - 1, "R");
-			ticket_Generate();
-		} else {
-			System.out.println("There are no available seats.");
-		}
+		ticket_Generate();
+
 	}
 
 // Getting available all_Seats_List.
@@ -84,7 +128,7 @@ public class Book_Seats {
 	}
 
 // Parameterized constructor to create the Ticket List.
-	public Book_Seats(String name, int age, char gender, String trainNumber, String Train_name, String arraivalStation,
+	public Book_Seats(String name, int age, String gender, String trainNumber, String Train_name, String arraivalStation,
 			String destinationStation, LocalDate dateofJourney, String Seatno) {
 
 		this.name = name;
@@ -106,8 +150,8 @@ public class Book_Seats {
 		String c = Character.toString(Reservation_info.passenger_DestinationStation.charAt(0));
 		String d = seatno;
 		String e = Train_info.all_Trains_List.get(bookTrainNo).trainDate.toString();
-		String ID = a+b+c+d+e;
-		
+		String ID = a + b + c + d + e;
+
 		tickets_List.put(ID, new Book_Seats(Reservation_info.passenger_Name, Reservation_info.passenger_Age,
 				Reservation_info.passenger_Gender, bookTrainNo, Train_info.all_Trains_List.get(bookTrainNo).trainName,
 				Train_info.all_Trains_List.get(bookTrainNo).trainArraivalStation,
@@ -124,6 +168,8 @@ public class Book_Seats {
 				+ "\t To : " + tickets_List.get(ID).destinationStation + "\t Train name : "
 				+ tickets_List.get(ID).trainName + "\n dateofJourney: " + tickets_List.get(ID).dateofJourney);
 		System.out.println("-------------------------------------------");
+
+//		System.out.println("After booking seats list is : "+windowSeatsList);
 
 	}
 

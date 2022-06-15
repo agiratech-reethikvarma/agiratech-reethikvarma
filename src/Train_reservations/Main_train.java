@@ -28,7 +28,7 @@ public class Main_train {
 		Reservation_info reservation_info = new Reservation_info();
 		Book_Seats bookseats = new Book_Seats();
 		Train_info train = new Train_info();
-		System.out.println("----- MAIN MENU -----\n");
+		System.out.println("\n ----- MAIN MENU -----\n");
 		System.out.println("1. Get All Trains List." + "\n2. Available Trains." + "\n3. Reserve a Ticket."
 				+ "\n4. View All Tickets." + "\n5. Cancel The Ticket." + "\n6. Exit\n");
 		do {
@@ -38,9 +38,6 @@ public class Main_train {
 
 		} while (Reservation_info.checkNumberFormat(choice) == false);
 
-//		}catch(InputMismatchException ex) {
-//			System.out.println("*** Invalid Type Of Option Please Select Correct Option given Above. ");
-
 		if ((choice.equals("4") || choice.equals("5")) && Book_Seats.tickets_List.isEmpty()) {
 			System.out.println("*** No Available Tickects To Do This Action.");
 		} else {
@@ -48,6 +45,7 @@ public class Main_train {
 			switch (choice) {
 			case "1":
 				train.get_AllTrainsList();
+				train.coach_2SFormat();
 				break;
 			case "2":
 				reservation_info.get_TrainsInfo();
