@@ -66,7 +66,6 @@ public class Main_train {
 				break;
 			default:
 				System.out.println("Please select the correct option.");
-
 			}
 		}
 	}

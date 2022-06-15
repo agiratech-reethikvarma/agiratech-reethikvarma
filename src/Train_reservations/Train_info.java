@@ -166,7 +166,6 @@ public class Train_info {
 				
 			}
 		}
-
 	}
 
 // Default constructor To Create Instance.

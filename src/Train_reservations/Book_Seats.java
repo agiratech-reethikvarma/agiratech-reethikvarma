@@ -21,7 +21,6 @@ public class Book_Seats {
 	String gender;
 	String arraivalStation, destinationStation, trainName;
 	LocalDate dateofJourney;
-
 	Scanner s = new Scanner(System.in);
 
 	List<String> booked_Seats = new ArrayList<String>();
