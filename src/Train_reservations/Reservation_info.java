@@ -73,6 +73,7 @@ public class Reservation_info {
 		} else {
 			return true;
 		}
+		
 	}
 
 	public static boolean checkNumberFormat(String number) {
