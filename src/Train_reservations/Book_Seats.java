@@ -30,7 +30,7 @@ public class Book_Seats {
 	static List<Book_Seats> waiting_List = Arrays.asList(new Book_Seats[10]);
 	List<String> windowSeatsList = new ArrayList<String>();
 	List<String> asileSeatsList = new ArrayList<String>();
-
+	
 // Set's 2 Seat preferences .
 	public void set2SeatPreferences() {
 

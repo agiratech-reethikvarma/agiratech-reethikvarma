@@ -74,7 +74,6 @@ public class Reservation_info {
 			return true;
 		}
 		
-
 	}
 
 	public static boolean checkNumberFormat(String number) {
@@ -85,7 +84,7 @@ public class Reservation_info {
 		} else {
 			return true;
 		}
-	}
+	} 
 	
 	public boolean checkGenderFormate(String gender) {
 		if (gender != null && !gender.contentEquals("M") && !gender.contentEquals("MALE")&& !gender.contentEquals("F")

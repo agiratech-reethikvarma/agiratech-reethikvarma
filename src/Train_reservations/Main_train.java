@@ -36,7 +36,6 @@ public class Main_train {
 			System.out.print("Select the option: ");
 			choice = scanner.next();
 
-			
 		} while (Reservation_info.checkNumberFormat(choice) == false);
 
 		if ((choice.equals("4") || choice.equals("5")) && Book_Seats.tickets_List.isEmpty()) {
