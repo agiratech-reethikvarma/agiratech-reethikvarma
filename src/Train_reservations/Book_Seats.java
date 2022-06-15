@@ -27,12 +27,11 @@ public class Book_Seats {
 	List<String> booked_Seats = new ArrayList<String>();
 	List<String> available_Seats_Temp = new ArrayList<>();
 	static HashMap<String, Book_Seats> tickets_List = new HashMap<String, Book_Seats>();
-
 	static List<Book_Seats> waiting_List = Arrays.asList(new Book_Seats[10]);
-
 	List<String> windowSeatsList = new ArrayList<String>();
 	List<String> asileSeatsList = new ArrayList<String>();
 
+// Set's 2 Seat preferences .
 	public void set2SeatPreferences() {
 
 		for (int i = 0; i < Train_info.all_Seats_List.get(bookTrainNo).size(); i++) {
@@ -61,8 +60,8 @@ public class Book_Seats {
 		bookTrainNo = To_Book_TrainNo;
 		set2SeatPreferences();
 		do {
-			System.out
-					.println("Enter The Primary Seat Preferences to book seat \"Window seats - W\" , \"Asile Seats - A\" :");
+			System.out.println(
+					"Enter The Primary Seat Preferences to book seat \"Window seats - W\" , \"Asile Seats - A\" :");
 			seatPreference = s.next();
 
 		} while (!(seatPreference.equals("W") || seatPreference.equals("A")));
@@ -128,8 +127,8 @@ public class Book_Seats {
 	}
 
 // Parameterized constructor to create the Ticket List.
-	public Book_Seats(String name, int age, String gender, String trainNumber, String Train_name, String arraivalStation,
-			String destinationStation, LocalDate dateofJourney, String Seatno) {
+	public Book_Seats(String name, int age, String gender, String trainNumber, String Train_name,
+			String arraivalStation, String destinationStation, LocalDate dateofJourney, String Seatno) {
 
 		this.name = name;
 		this.age = age;

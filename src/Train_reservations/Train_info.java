@@ -11,7 +11,6 @@ import java.util.List;
 
 public class Train_info {
 
-
 	Scanner Scanner_Obj = new Scanner(System.in);
 
 	public String trainName, trainArraivalStation, trainDestinationStation;
@@ -37,14 +36,14 @@ public class Train_info {
 	static Book_Seats Book_seats_obj = new Book_Seats();
 
 	Map<String, Train_info> available_Trains_List = new HashMap<String, Train_info>();
-	static Map<String,List<String>> all_Seats_List = new HashMap<String,List<String>>();
+	static Map<String, List<String>> all_Seats_List = new HashMap<String, List<String>>();
 	static Map<String, Train_info> all_Trains_List = new HashMap<String, Train_info>();
 
 //Adding Trains List And all_Seats_List
 	public static void set_TrainsInformations() {
 
-		for(int i=0;i<20;i++) {
-			seats_ListFormat.add(Integer.toString(i+1));
+		for (int i = 0; i < 20; i++) {
+			seats_ListFormat.add(Integer.toString(i + 1));
 		}
 		seats_List1.addAll(seats_ListFormat);
 		seats_List2.addAll(seats_ListFormat);
@@ -54,7 +53,7 @@ public class Train_info {
 		seats_List6.addAll(seats_ListFormat);
 		seats_List7.addAll(seats_ListFormat);
 		seats_List8.addAll(seats_ListFormat);
-		
+
 		Collections.addAll(reserved_seats_List, "R", "R", "R", "R");
 
 		all_Trains_List.put("1", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 7, 1),
@@ -76,6 +75,7 @@ public class Train_info {
 
 	}
 
+//Prints All Trains List.
 	public void get_AllTrainsList() {
 		System.out.println("*********   All Trains List    **********");
 
@@ -86,38 +86,36 @@ public class Train_info {
 				.forEach(x -> System.out.println("|\t " + x + " \t | " + all_Trains_List.get(x).trainName + " \t | "
 						+ all_Trains_List.get(x).trainArraivalStation + " \t |"
 						+ all_Trains_List.get(x).trainDestinationStation + " \t |" + all_Trains_List.get(x).trainDate
-						+ " \t |\t"+checkAvailableSeatsCount(all_Seats_List.get(x))+" \t |"));
-	
+						+ " \t |\t" + checkAvailableSeatsCount(all_Seats_List.get(x)) + " \t |"));
+
 	}
-	
-	private int checkAvailableSeatsCount(List<String>seatsList){
-		availableSeatsCount=seatsList.size();
-		for(int i=0;i<seatsList.size();i++) {
-			if(seatsList.get(i).equals("R")){
-				availableSeatsCount=availableSeatsCount-1;
+
+//	Gives Available seats count By removing Reserved seats.
+	private int checkAvailableSeatsCount(List<String> seatsList) {
+		availableSeatsCount = seatsList.size();
+		for (int i = 0; i < seatsList.size(); i++) {
+			if (seatsList.get(i).equals("R")) {
+				availableSeatsCount = availableSeatsCount - 1;
 			}
 		}
 		return availableSeatsCount;
 	}
+
+// Prints 2 Sitting coach Seats Format 
 	public void coach_2SFormat() {
 
 		System.out.println("\n\t\t -- 2S Coach Seats Format --");
 		System.out.println("\t-W-" + "\t\t-A-" + "\t\t-A-" + "\t\t-W-");
-		for (int i = 0; i <seats_ListFormat.size(); i++)
-		{
+		for (int i = 0; i < seats_ListFormat.size(); i++) {
 			count = i + 1;
 			System.out.print("\t " + count + "\t");
 			if (count % 4 == 0) {
 				System.out.println();
 			}
 		}
-		
+
 	}
 
-	
-	
-	
-	
 //	 Parameterized constructor to Create List of trains.
 	public Train_info(String trainName, String trainArraivalStation, String trainDestinationStation,
 			LocalDate Date_of_Journey, List<String> all_Seats_List) {
@@ -149,16 +147,17 @@ public class Train_info {
 
 			System.out.println("********* Your Available Trains List**********");
 
-			System.out.println("| TrainNo \t |" + " TrainName \t |" + " Arraival \t |" + " Destination \t |" + " Date \t |"
-					+ " Seats \t |\n"
+			System.out.println("| TrainNo \t |" + " TrainName \t |" + " Arraival \t |" + " Destination \t |"
+					+ " Date \t |" + " Seats \t |\n"
 					+ "|------------------------------------------------------------------------------------------------|");
 			Set<String> availableTrainsListKey = available_Trains_List.keySet();
 			for (String Key : availableTrainsListKey) {
 
-				System.out.println("| \t "+Key + " \t | " + available_Trains_List.get(Key).trainName + " \t | "
+				System.out.println("| \t " + Key + " \t | " + available_Trains_List.get(Key).trainName + " \t | "
 						+ available_Trains_List.get(Key).trainArraivalStation + " \t | "
 						+ available_Trains_List.get(Key).trainDestinationStation + " \t | "
-						+ available_Trains_List.get(Key).trainDate + " \t | \t " + checkAvailableSeatsCount(all_Seats_List.get(Key)) + " \t |");
+						+ available_Trains_List.get(Key).trainDate + " \t | \t "
+						+ checkAvailableSeatsCount(all_Seats_List.get(Key)) + " \t |");
 
 			}
 
@@ -166,7 +165,6 @@ public class Train_info {
 				book_Train();
 			}
 		}
-		
 
 	}
 
