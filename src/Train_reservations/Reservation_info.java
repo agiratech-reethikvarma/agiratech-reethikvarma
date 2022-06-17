@@ -1,18 +1,18 @@
 package Train_reservations;
 
+import java.util.Date;
 import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.text.ParseException;
 
 public class Reservation_info {
 	Scanner Scanner_obj = new Scanner(System.in);
 	public static String passenger_Name;
 	public static int passenger_Age;
 	public static String passenger_Gender;
+	public static Date passenger_dateOfJourney;
 	public static String passenger_ArraivalStation, passenger_DestinationStation;
-	public static LocalDate passenger_DateofJourney;
 	public static String age_Check, gender_Check;
-	public static String dateofJourney_Check;
+	public static String dateofJourney;
 
 //Getting information from passenger for reservation .
 	public void get_PassengerInfo() {
@@ -34,7 +34,7 @@ public class Reservation_info {
 		do {
 			System.out.print("\t Enter Gender : ");
 			passenger_Gender = Scanner_obj.next().toUpperCase();
-		} while (checkGenderFormate(passenger_Gender)==false);
+		} while (checkGenderFormate(passenger_Gender) == false);
 
 		get_TrainsInfo();
 	}
@@ -55,10 +55,15 @@ public class Reservation_info {
 		passenger_DestinationStation = passenger_DestinationStation.toUpperCase();
 
 		do {
-			System.out.print("\n Enter the Date of journey in (YYYY-MM-DD) formate : ");
-			dateofJourney_Check = Scanner_obj.next();
-		} while (checkDateFormat(dateofJourney_Check) == false);
-		passenger_DateofJourney = LocalDate.parse(dateofJourney_Check);
+			System.out.print("\n Enter the Date of journey in (DD/MM/YYYY) formate : ");
+			dateofJourney = Scanner_obj.next();
+			Train_info.user_DatePattern.setLenient(false);
+		} while (checkDateFormat(dateofJourney) == false);
+		try {
+		passenger_dateOfJourney=Train_info.user_DatePattern.parse(dateofJourney);
+		}catch(ParseException P) {
+			System.out.println("### Given Date Not stored In Data ###");
+		}
 
 		System.out.println();
 		train_info.check_AvailableTrains();
@@ -66,14 +71,14 @@ public class Reservation_info {
 	}
 
 //	Check Input Format is correct or not.
-	public boolean checkStringFormat(String Name) {
+	private static boolean checkStringFormat(String Name) {
 		if (Name != null && !Name.matches("^[a-zA-Z]*$")) {
 			System.out.println("*** Enter Your Input in valid Alaphabet Format.");
 			return false;
 		} else {
 			return true;
 		}
-		
+
 	}
 
 	public static boolean checkNumberFormat(String number) {
@@ -84,32 +89,41 @@ public class Reservation_info {
 		} else {
 			return true;
 		}
-	} 
-	
-	public boolean checkGenderFormate(String gender) {
-		if (gender != null && !gender.contentEquals("M") && !gender.contentEquals("MALE")&& !gender.contentEquals("F")
+	}
+
+	private static boolean checkGenderFormate(String gender) {
+		if (gender != null && !gender.contentEquals("M") && !gender.contentEquals("MALE") && !gender.contentEquals("F")
 				&& !gender.contentEquals("FEMALE")) {
 			System.out.println("*** Enter Gender in Following formate (M/Male)for Male , (F/Female)for Female.");
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
 
-	public boolean checkDateFormat(String date) {
+	private static boolean checkDateFormat(String date) {
+		String[] split = date.split("/");
 		try {
-			LocalDate localDate = LocalDate.parse(date);
-			if (!(LocalDate.now().isBefore(localDate) || LocalDate.now().isEqual(localDate))) {
-				System.out.println("***  You Entered Past date Enter in Upcoming (YYYY-MM-DD) Format.");
-				return false;
+			Date Ddate = Train_info.user_DatePattern.parse(date);
+			Date NowDate = Train_info.user_DatePattern.parse(Train_info.user_DatePattern.format(new Date()));
+
+			if ((Integer.parseInt(split[0]) <= 31 && Integer.parseInt(split[0]) > 0) && Integer.parseInt(split[1]) > 0
+					&& Integer.parseInt(split[1]) <= 12) {
+
+				if (Ddate.before(NowDate) || Ddate.equals(NowDate)) {
+					System.out.println("***  You Entered Past date .");
+					return false;
+				} else {
+					return true;
+				}
 			} else {
-				return true;
+				System.out.println("*** Enter Date In Valid format With correct Day and Month (DD/MM/YYYY)");
+				return false;
 			}
-		} catch (DateTimeParseException ex) {
-			System.out.println("*** Enter date in Correct Valid Date In (YYYY-MM-DD) Format. ");
+		} catch (ParseException E) {
+			System.out.println("*** Enter Date In Valid format With correct Day and Month (DD/MM/YYYY)");
 			return false;
 		}
 
 	}
-
 }

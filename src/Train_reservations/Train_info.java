@@ -1,23 +1,29 @@
 package Train_reservations;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class Train_info {
 
 	public String trainName, trainArraivalStation, trainDestinationStation;
-	public LocalDate trainDate;
+	public Date trainDate;
 	static int count;
 	int availableSeatsCount;
 	String bookTrainNo;
 	String coachName;
 
+	public static SimpleDateFormat datePattern = new SimpleDateFormat("yyyy/MM/dd");
+	public static SimpleDateFormat user_DatePattern = new SimpleDateFormat("dd/MM/yyyy");
+
 	Scanner Scanner_Obj = new Scanner(System.in);
+	Reservation_info res_infoObj = new Reservation_info();
 
 	static Map<String, Train_info> all_Trains_List = new HashMap<String, Train_info>();
 	Map<String, Train_info> available_Trains_List = new HashMap<String, Train_info>();
@@ -74,23 +80,31 @@ public class Train_info {
 		SLseats_List6.addAll(seats_ListFormat);
 		SLseats_List7.addAll(seats_ListFormat);
 		SLseats_List8.addAll(seats_ListFormat);
-
-		all_Trains_List.put("1", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 7, 1),
-				all_S2_coach.put("1", S2seats_List1), all_SL_coach.put("1", SLseats_List1)));
-		all_Trains_List.put("2", new Train_info("TRL<=>CHE", "THIRUVALLUR", "CHENNAI", LocalDate.of(2022, 7, 26),
-				all_S2_coach.put("2", S2seats_List2), all_SL_coach.put("2", SLseats_List2)));
-		all_Trains_List.put("3", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 7, 28),
-				all_S2_coach.put("3", S2seats_List3), all_SL_coach.put("3", SLseats_List3)));
-		all_Trains_List.put("4", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", LocalDate.of(2022, 7, 27),
-				all_S2_coach.put("4", S2seats_List4), all_SL_coach.put("4", SLseats_List4)));
-		all_Trains_List.put("5", new Train_info("TRL<=>AVD", "THIRUVALLUR", "AVADI", LocalDate.of(2022, 7, 9),
-				all_S2_coach.put("5", S2seats_List5), all_SL_coach.put("5", SLseats_List5)));
-		all_Trains_List.put("6", new Train_info("AVD<=>TRL", "AVADI", "THIRUVALLUR", LocalDate.of(2022, 12, 5),
-				all_S2_coach.put("6", S2seats_List6), all_SL_coach.put("6", SLseats_List6)));
-		all_Trains_List.put("7", new Train_info("AVD<=>CHE", "AVADI", "CHENNAI", LocalDate.of(2022, 7, 6),
-				all_S2_coach.put("7", S2seats_List7), all_SL_coach.put("7", SLseats_List7)));
-		all_Trains_List.put("8", new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", LocalDate.of(2022, 5, 2),
-				all_S2_coach.put("8", S2seats_List8), all_SL_coach.put("8", SLseats_List8)));
+		try {
+			all_Trains_List.put("1",
+					new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", datePattern.parse("2022/07/27"),
+							all_S2_coach.put("1", S2seats_List1), all_SL_coach.put("1", SLseats_List1)));
+			all_Trains_List.put("2",
+					new Train_info("TRL<=>CHE", "THIRUVALLUR", "CHENNAI", datePattern.parse("2022/07/28"),
+							all_S2_coach.put("2", S2seats_List2), all_SL_coach.put("2", SLseats_List2)));
+			all_Trains_List.put("3", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", datePattern.parse("2022/07/28"),
+					all_S2_coach.put("3", S2seats_List3), all_SL_coach.put("3", SLseats_List3)));
+			all_Trains_List.put("4", new Train_info("CHE<=>AVD", "CHENNAI", "AVADI", datePattern.parse("2022/07/27"),
+					all_S2_coach.put("4", S2seats_List4), all_SL_coach.put("4", SLseats_List4)));
+			all_Trains_List.put("5",
+					new Train_info("TRL<=>AVD", "THIRUVALLUR", "AVADI", datePattern.parse("2022/07/09"),
+							all_S2_coach.put("5", S2seats_List5), all_SL_coach.put("5", SLseats_List5)));
+			all_Trains_List.put("6",
+					new Train_info("AVD<=>TRL", "AVADI", "THIRUVALLUR", datePattern.parse("2022/12/05"),
+							all_S2_coach.put("6", S2seats_List6), all_SL_coach.put("6", SLseats_List6)));
+			all_Trains_List.put("7", new Train_info("AVD<=>CHE", "AVADI", "CHENNAI", datePattern.parse("2022/07/06"),
+					all_S2_coach.put("7", S2seats_List7), all_SL_coach.put("7", SLseats_List7)));
+			all_Trains_List.put("8",
+					new Train_info("CHE<=>TRL", "CHENNAI", "THIRUVALLUR", datePattern.parse("2022/05/02"),
+							all_S2_coach.put("8", S2seats_List8), all_SL_coach.put("8", SLseats_List8)));
+		} catch (ParseException e) {
+			System.out.println("trains date not set.");
+		}
 
 	}
 
@@ -104,8 +118,9 @@ public class Train_info {
 		all_Trains_List.keySet().stream()
 				.forEach(x -> System.out.println("|\t " + x + " \t | " + all_Trains_List.get(x).trainName + " \t | "
 						+ all_Trains_List.get(x).trainArraivalStation + " \t |"
-						+ all_Trains_List.get(x).trainDestinationStation + " \t |" + all_Trains_List.get(x).trainDate
-						+ " \t |\t" + checkAvailableSeatsCount(all_S2_coach.get(x)) + " \t | \t "
+						+ all_Trains_List.get(x).trainDestinationStation + " \t |"
+						+ user_DatePattern.format(all_Trains_List.get(x).trainDate) + " \t |\t"
+						+ checkAvailableSeatsCount(all_S2_coach.get(x)) + " \t | \t "
 						+ checkAvailableSeatsCount(all_SL_coach.get(x)) + " \t | "));
 
 	}
@@ -154,7 +169,7 @@ public class Train_info {
 
 //	 Parameterized constructor to Create List of trains.
 	public Train_info(String trainName, String trainArraivalStation, String trainDestinationStation,
-			LocalDate Date_of_Journey, List<String> S2Seats, List<String> SLSeats) {
+			Date Date_of_Journey, List<String> S2Seats, List<String> SLSeats) {
 
 		this.trainName = trainName;
 		this.trainArraivalStation = trainArraivalStation;
@@ -169,8 +184,8 @@ public class Train_info {
 		all_Trains_List.keySet().stream().filter(x -> all_Trains_List.get(x).trainArraivalStation
 				.equals(Reservation_info.passenger_ArraivalStation)
 				&& all_Trains_List.get(x).trainDestinationStation.equals(Reservation_info.passenger_DestinationStation)
-				&& (all_Trains_List.get(x).trainDate.isEqual(Reservation_info.passenger_DateofJourney)
-						|| all_Trains_List.get(x).trainDate.isAfter(Reservation_info.passenger_DateofJourney))
+				&& (all_Trains_List.get(x).trainDate.equals(Reservation_info.passenger_dateOfJourney)
+						|| all_Trains_List.get(x).trainDate.after(Reservation_info.passenger_dateOfJourney))
 				&& !(all_S2_coach.get(x).equals(reserved_List)))
 				.forEach(x -> available_Trains_List.put(x,
 						new Train_info(all_Trains_List.get(x).trainName, all_Trains_List.get(x).trainArraivalStation,
@@ -181,21 +196,27 @@ public class Train_info {
 			System.out.println("*** Sorry No Trains Available for Given.");
 
 		} else {
+			Set<String> availableTrainsListKey = available_Trains_List.keySet();
 
 			System.out.println("********* Your Available Trains List**********");
 
 			System.out.println("| TrainNo \t |" + " TrainName \t |" + " Arraival \t |" + " Destination \t |"
 					+ " Date \t |" + " 2Sitting \t | " + " SL Seats \t | \n"
 					+ "|----------------------------------------------------------------------------------------------------------------|");
-			Set<String> availableTrainsListKey = available_Trains_List.keySet();
-			for (String Key : availableTrainsListKey) {
 
-				System.out.println("|\t " + Key + " \t | " + all_Trains_List.get(Key).trainName + " \t | "
-						+ all_Trains_List.get(Key).trainArraivalStation + " \t |"
-						+ all_Trains_List.get(Key).trainDestinationStation + " \t |"
-						+ all_Trains_List.get(Key).trainDate + " \t |\t"
-						+ checkAvailableSeatsCount(all_S2_coach.get(Key)) + " \t | \t "
-						+ checkAvailableSeatsCount(all_SL_coach.get(Key)) + " \t | ");
+			for (String Key : availableTrainsListKey) {
+				if (Train_info.all_S2_coach.get(Key).equals(reserved_List)
+						&& Train_info.all_SL_coach.get(Key).equals(reserved_List)) {
+
+			
+				} else {
+					System.out.println("|\t " + Key + " \t | " + all_Trains_List.get(Key).trainName + " \t | "
+							+ all_Trains_List.get(Key).trainArraivalStation + " \t |"
+							+ all_Trains_List.get(Key).trainDestinationStation + " \t |"
+							+ user_DatePattern.format(all_Trains_List.get(Key).trainDate) + " \t |\t"
+							+ checkAvailableSeatsCount(all_S2_coach.get(Key)) + " \t | \t "
+							+ checkAvailableSeatsCount(all_SL_coach.get(Key)) + " \t | ");
+				}
 			}
 
 			if (Main_train.choice.equals("3")) {

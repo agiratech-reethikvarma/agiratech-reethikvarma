@@ -46,6 +46,8 @@ public class Main_train {
 			case "1":
 				train.get_AllTrainsList();
 				train.coach_2SFormat();
+				train.coach_SLFormat();
+			
 				break;
 			case "2":
 				reservation_info.get_TrainsInfo();
